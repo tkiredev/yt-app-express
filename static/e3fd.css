@@ -47,7 +47,12 @@ background-color: #0f0f0f;
 border-radius: 4px;
 height: 32px;
 }
-
+html[darker-dark-theme] .search-bar, html[darker-dark-theme] .search-bar[data-has-rounded-searchbox="true"]{
+	background-color: rgba(0,0,0,0.05);
+}
+.mobile-topbar-header[data-mode="browse"][data-has-rounded-searchbox="true"] c3-icon:not(.mobile-topbar-logo), .mobile-topbar-header[data-mode="search"][data-has-rounded-searchbox="true"] c3-icon:not(.mobile-topbar-logo), .mobile-topbar-header[data-mode="searching"][data-has-rounded-searchbox="true"] c3-icon:not(.mobile-topbar-logo){
+	color:  #000;
+}
 .search-bar-text{
 -webkit-transform: translateY(-16%);
 transform: translateY(-16%);
@@ -55,7 +60,7 @@ display: block;
 overflow: hidden;
 white-space: nowrap;
 text-overflow: ellipsis;
-color: #f1f1f1;
+color: rgb(15, 15, 15);
 padding-left: 12px;
 height: 48px;
 line-height: 48px;

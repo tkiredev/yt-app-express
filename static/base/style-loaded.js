@@ -269,6 +269,7 @@ _.Crw("ytm-single-column-watch-next-results-renderer", {class: "watch-content fu
 
   const _item = function(t,v){
     v.url = "/"+(v.url["split"]("/")[3])
+  
     let typ = _.Crw(`ytm-compact-${t}-renderer`, {class: "item"},
       _.Crw("div",{class: "compact-media-item", "data-has-subscribe-button": ""}), sect)["childNodes"][0]
 
@@ -276,7 +277,7 @@ _.Crw("ytm-single-column-watch-next-results-renderer", {class: "watch-content fu
     let thum = _.Crw("a", {class: "compact-media-item-image", "aria-hidden": true, href: v.url}, _.Crw("div", {class: "video-thumbnail-container-compact center video-thumbnail-container-compact-rounded"}), typ)["firstChild"]
     var xf =  (v.bestAvatar ?? v.thumbnails);xf = (xf.url || xf[0].url);xf = xf.split("/");
     xf = xf.filter(g=> g != "https:" && g != "//" && g!= "" && g!="yt3.googleusercontent.com" && g!="i.ytimg.com" && g!="yt3.ggpht.com")
-    xf = BASE_URL+(xf.length > 2 ? "/i/":"/yt3/")+xf[0]+"/"+(xf.length > 2?xf[1]+"/"+xf[2]:xf[1])
+    xf = (xf.length > 2 ? "/i/":"/yt3/")+xf[0]+"/"+(xf.length > 2?xf[1]+"/"+xf[2]:xf[1])
 
 
     _.Crw("div", {class: "cover video-thumbnail-img video-thumbnail-bg"},false, thum)
@@ -291,12 +292,15 @@ _.Crw("ytm-single-column-watch-next-results-renderer", {class: "watch-content fu
 
     let subh = _.Crw("div",{class: "subhead"},false,imdata)
 
+    //console.log(t=="video",t);
+    
     if (t=="channel") {
       _.Crw("div", {class: "compact-media-item-byline small-text"},false, subh).textContent = (v.subscribers)
       let qk =  _.Crw("div",{class: "compact-media-item-byline small-text"},false,subh)
       _.Crw("span", {class: "formatted-string-text", role: "text"}, false, qk).textContent = (v.videos > 1 ? v.videos + " videos": v.videos + " video")
-    } else if(t=="video"){
+    } else if(t=="video"){      
       _.Crw("div", {class: "compact-media-item-byline small-text"},false, subh).textContent = (v.author.name)
+
       let vw = _.Crw("div", {class: "compact-media-item-stats small-text"},_.Crw("font", {style: "vertical-align: inherit;"}), subh)
       vw.firstElementChild["textContent"] = (_.pvw(v.short_view_count_text))
 
@@ -308,13 +312,11 @@ _.Crw("ytm-single-column-watch-next-results-renderer", {class: "watch-content fu
   d.forEach(z =>{
     z.type == "channel" && _item("channel", z)
     z.type == "video" && _item("video", z)
-
     if (z.type == "shelf") {
      z.items.forEach(q=>{
        _item("video", q)
      })
     }
-      
    })
 
 
@@ -342,7 +344,7 @@ _.Crw("ytm-single-column-watch-next-results-renderer", {class: "watch-content fu
 
 }, rwat = (l)=>{
  var ba = _.Sl("#player-container-id");
- var src_uid = "http://youtube.googleapis.com/s/" + a.Rt("watch")
+ var src_uid = "s/" + a.Rt("watch")
 
  var plyer = _.Crw("div", {id: "movie_player", class: "html5-video-player"})
   _.Crw("div", {class: "html5-video-container"},_.Crw("video", {class: "video-stream html5-main-video",tabindex: "-1", controlslist: "nodownload"}), plyer)
@@ -375,8 +377,6 @@ _.Crw("ytm-custom-control",false,false,ba.childNodes[2])
 (function(d){
  var mode = "white";
 }(d))
-
-const BASE_URL = "http://youtube.googleapis.com";
 
 const home = ()=>{
   if (w.location.pathname === "/") {
@@ -444,7 +444,7 @@ results()
   (i)? s.removeAttribute("hidden"):s.setAttribute("hidden","");
  },_re: async function(i,j){
    try{
-   let fh = await fetch("http://youtube.googleapis.com"+"/"+i)
+   let fh = await fetch("/"+i)
     if (fh.status === 200){
     this.spiner(false)
      return  (j? await fh.json():{"code": 200})
@@ -457,7 +457,7 @@ results()
    }
   },
   U: function(u){
-    return "http://youtube.googleapis.com"+u;
+    return u;
   },
   Pt: (txt, def = null) => {
    if (typeof txt !== 'object') return def;
@@ -544,8 +544,8 @@ results()
 		return(`url(${u})`);
 	},
 	Im: (i)=>{
-    return(`http://youtube.googleapis.com${i}`)
-	},
+    return i;
+  },
 	ev: (e,t,call)=>{
 	 e ==null|| e.addEventListener(t,call)
 	},

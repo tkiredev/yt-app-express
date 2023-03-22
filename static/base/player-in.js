@@ -155,11 +155,13 @@
       //361 x 203
       //428 x 241
       //default quality
-      var wd = screen.width + "px";
-      var he;
+      var wd = "428px";//screen.width + "px";
+      var he = "241px";
       var t = [video.videoWidth,video.videoHeight]
       var scrennDev = {
         428: "241px",
+        422: "237px",
+        421: "237px",
         414: "233px",
         412: "232px",
         390: "219px",
@@ -168,7 +170,7 @@
         384: "216px",
         375: "211px",
       }[screen.width] ?? false;
-      he = scrennDev;
+      //he = scrennDev;
         if ( (t[0] * t[1]) === 172800 || (t[0] * t[1]) === 163200) {
 
           _.Gt(video,{width: "412px",height: "309px",top: "0px", left: "0px"}); 
@@ -390,7 +392,7 @@ var pl = _.Qr(".player-controls-pb");
 
 
 const only = (x)=>{
- _.Gt(_.Qr(".ytp-cued-thumbnail-overlay").childNodes[1],{display: "none"}) || ctl() || _.plyspi(true) && _.Cinematic();
+ _.Gt(_.Qr(".ytp-cued-thumbnail-overlay").childNodes[1],{display: "none"}) || ctl() || _.plyspi(true) //&& _.Cinematic();
 
  if (video.duration > 0 || video.aredyState > 2) {
      _pclk();
